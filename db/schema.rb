@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151104172632) do
+ActiveRecord::Schema.define(version: 20160420112921) do
 
   create_table "categories", force: true do |t|
     t.string   "title"
@@ -24,6 +24,22 @@ ActiveRecord::Schema.define(version: 20151104172632) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "chats", force: true do |t|
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "chats_vendors", force: true do |t|
+    t.integer  "vendor_id"
+    t.integer  "chat_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "chats_vendors", ["chat_id"], name: "index_chats_vendors_on_chat_id"
+  add_index "chats_vendors", ["vendor_id"], name: "index_chats_vendors_on_vendor_id"
 
   create_table "collections", force: true do |t|
     t.string   "title"
@@ -65,6 +81,17 @@ ActiveRecord::Schema.define(version: 20151104172632) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "messages", force: true do |t|
+    t.integer  "chat_id"
+    t.integer  "vendor_id"
+    t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "messages", ["chat_id"], name: "index_messages_on_chat_id"
+  add_index "messages", ["vendor_id"], name: "index_messages_on_vendor_id"
 
   create_table "option_images", force: true do |t|
     t.datetime "created_at"
@@ -199,6 +226,7 @@ ActiveRecord::Schema.define(version: 20151104172632) do
     t.string   "sample_photo_content_type"
     t.integer  "sample_photo_file_size"
     t.datetime "sample_photo_updated_at"
+    t.datetime "last_seen"
   end
 
   add_index "vendors", ["confirmation_token"], name: "index_vendors_on_confirmation_token", unique: true

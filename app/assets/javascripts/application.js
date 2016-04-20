@@ -13,6 +13,7 @@
 //= require pace
 //= require jquery
 //= require jquery_ujs
+
 //= require jquery.remotipart
 //= require dropzone
 //= require bootstrap
@@ -53,7 +54,9 @@
 //= require dashboard
 //= require jquery_nested_form
 //= require jquery.validate.min
-
+//= require private_pub
+//= require chat
+//= require turbolinks
 
 function remove_fields(link) {
 	$(link).prev("input[type=hidden]").val(true);

@@ -2,6 +2,7 @@ class HomeController < ApplicationController
   layout :resolve_layout
   before_filter :authenticate_vendor! , :except => [:welcome, :thank_you]
   def index
+    @vendors_online = Vendor.where('last_seen < ?', 15.seconds.ago)
   end
 
   def login

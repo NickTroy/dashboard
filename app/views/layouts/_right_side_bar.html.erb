@@ -1,3 +1,4 @@
+
 <aside id="right-sidebar" class="right-sidebar hidden-md hidden-sm hidden-xs">
   <!-- Start .sidebar-inner -->
   <div class="sidebar-inner">
@@ -104,6 +105,25 @@
                     </div>
                   </form>
                   <ul class="user-list list-group">
+                      <% @vendors_online.each do |vendor| %>
+                        <% unless vendor.id == current_vendor.id %>
+                        <li class="list-group-item clearfix">
+                          <a href="#" class="start_chat" data-vendor_id=<%= vendor.id %>>
+                            <img src="/assets/avatars/4.jpg" alt="avatar" class="avatar">
+                            <span class="name"><%= vendor.vendor_name %></span>
+                            <span class="status status-offline">offline from 1 Dec</span>
+                          </a>
+                          <div class="chat-messages">
+                            <ul>
+                              <li class="chat-back"><a href="#">Back <i class="fa fa-chevron-right ml5"></i> </a></li>
+                              <li class="no-messages">
+                                <p class="text-center color-red">No messages are found</p>
+                              </li>
+                            </ul>
+                          </div>
+                        </li>
+                        <% end %>
+                      <% end %>
                       <li class="list-group-item clearfix">
                         <a href="#">
                           <img src="/assets/avatars/2.jpg" alt="avatar" class="avatar">

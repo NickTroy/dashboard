@@ -1,7 +1,7 @@
 class Vendor < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :lastseenable#, :confirmable
   
   has_many :categories, :through => :vendor_categories
   has_many :vendor_categories
@@ -12,12 +12,15 @@ class Vendor < ActiveRecord::Base
   has_many :companies, :through =>  :vendor_companies
   has_many :vendor_companies, dependent: :destroy
 
+  has_many :chats_vendors, dependent: :destroy
+  has_many :chats, through: :chats_vendors, dependent: :nullify
+
   has_attached_file :sample_photo, styles: {thumb: "100x100#", small: "300x300#", medium: "500x500#", large: "800x800#"}
   validates_attachment_content_type :sample_photo, content_type: ['image/jpeg', 'image/png', 'application/pdf']  
 
-  def password_required?
-    super if confirmed?
-  end
+  #def password_required?
+  #  super if confirmed?
+  #end
 
   def password_match?
     self.errors[:password] << "can't be blank" if password.blank?

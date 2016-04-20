@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
     var wW = $(window).width();
     var wH = $(window).height();
     var LW = $("#logo").width();

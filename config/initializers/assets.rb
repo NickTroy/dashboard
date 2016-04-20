@@ -12,3 +12,4 @@ Rails.application.config.assets.precompile += %w( registration.css )
 
 Rails.application.config.assets.precompile += %w( home.js )
 Rails.application.config.assets.precompile += %w( home.css )
+Rails.application.config.assets.precompile += %w( chat.js )
