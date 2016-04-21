@@ -3,6 +3,24 @@ class HomeController < ApplicationController
   before_filter :authenticate_vendor! , :except => [:welcome, :thank_you]
   def index
     @vendors_online = Vendor.where('last_seen < ?', 15.seconds.ago)
+    @vendor_chat_messages = {}
+    @vendors_online.each do |vendor|
+      unless vendor.id == current_vendor.id
+        Chat.where( :kind => "personal").each do |chat|
+          unless chat.vendors.where(:id => vendor.id).empty? or chat.vendors.where(:id => current_vendor.id).empty?
+            @chat = chat
+            break  
+          end
+        end
+        if @chat.nil? 
+          @chat = Chat.new( :kind => "personal" )
+          @chat.vendors << vendor1
+          @chat.vendors << vendor2
+          @chat.save
+        end
+        @vendor_chat_messages[vendor.id] = @chat.messages
+      end 
+    end
   end
 
   def login

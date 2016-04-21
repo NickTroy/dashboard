@@ -107,8 +107,8 @@
                   <ul class="user-list list-group">
                       <% @vendors_online.each do |vendor| %>
                         <% unless vendor.id == current_vendor.id %>
-                        <li class="list-group-item clearfix">
-                          <a href="#" class="start_chat" data-vendor_id=<%= vendor.id %>>
+                        <li class="list-group-item start_chat clearfix">
+                          <a href="#" class="avatar_and_name" data-vendor_id=<%= vendor.id %>>
                             <img src="/assets/avatars/4.jpg" alt="avatar" class="avatar">
                             <span class="name"><%= vendor.vendor_name %></span>
                             <span class="status status-offline">offline from 1 Dec</span>
@@ -116,11 +116,21 @@
                           <div class="chat-messages">
                             <ul>
                               <li class="chat-back"><a href="#">Back <i class="fa fa-chevron-right ml5"></i> </a></li>
+                              <% @vendor_chat_messages[vendor.id].each do |message| %>
+                                <li><%= message.text %></li>
+                              <% end %>
                               <li class="no-messages">
                                 <p class="text-center color-red">No messages are found</p>
                               </li>
                             </ul>
                           </div>
+                          <div class="new_message_form">
+                            <input type="textarea" class="form-control">
+                            <div class="chat-form-btns">    
+                              <input type="button" class="btn btn-sm btn-submit">
+                            </div>
+                          </div>
+                            
                         </li>
                         <% end %>
                       <% end %>
