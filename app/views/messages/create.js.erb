@@ -1,0 +1,6 @@
+alert('<%= chat_path(@chat) %>');
+<% publish_to chat_path(@chat) do %>
+  $('.start_chat[data-chat_id="<%= @chat.id %>"]').find(".chat-messages").append("<%= @message_text %>");
+<% end %>
+
+

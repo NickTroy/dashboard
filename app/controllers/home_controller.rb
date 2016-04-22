@@ -2,8 +2,9 @@ class HomeController < ApplicationController
   layout :resolve_layout
   before_filter :authenticate_vendor! , :except => [:welcome, :thank_you]
   def index
-    @vendors_online = Vendor.where('last_seen < ?', 15.seconds.ago)
+    @vendors_online = Vendor.where('last_seen > ?', 5.minutes.ago)
     @vendor_chat_messages = {}
+    @vendor_chats = {}
     @vendors_online.each do |vendor|
       unless vendor.id == current_vendor.id
         Chat.where( :kind => "personal").each do |chat|
@@ -14,11 +15,12 @@ class HomeController < ApplicationController
         end
         if @chat.nil? 
           @chat = Chat.new( :kind => "personal" )
-          @chat.vendors << vendor1
-          @chat.vendors << vendor2
+          @chat.vendors << vendor
+          @chat.vendors << current_vendor
           @chat.save
         end
         @vendor_chat_messages[vendor.id] = @chat.messages
+        @vendor_chats[vendor.id] = @chat
       end 
     end
   end

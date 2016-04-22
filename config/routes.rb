@@ -28,6 +28,8 @@ Rails.application.routes.draw do
   end    
 
   resources :vendors, only: [:index, :edit, :update, :destroy]
+  resources :messages
+  resources :chats
   resources :product_types
   namespace :admin do
     resources :categories
